@@ -12,6 +12,7 @@ import yfinance as yf
 from src.cerberus_quant.data.market_data import MarketDataFetcher
 from src.cerberus_quant.data.synthetic import SyntheticDataGen
 from src.cerberus_quant.data.returns import ReturnCalculator
+from src.cerberus_quant.models.risk import RiskModel
 
 
 
@@ -27,8 +28,11 @@ if __name__ == "__main__":
     prices_synth = synth.gen_gaussian_prices(initial_price=100.0, mu=mu_actual, sigma=sigma_actual, days=len(data))
     log_returns_synth = ReturnCalculator(prices=prices_synth).log_returns()
 
-    print(f"Skewness of Real Data Log Returns: {skew(log_returns_real)} whereas Skewness of Synthetic Data Log Returns: {skew(log_returns_synth)}")
-    print(f"Kurtosis of Real Data Log Returns: {kurtosis(log_returns_real)} whereas Kurtosis of Synthetic Data Log Returns: {kurtosis(log_returns_synth)}")
+    hist_model_real = RiskModel(historical_returns=log_returns_real)
+    print(f"Historical VaR (Real Data) at 99% confidence: {hist_model_real.historical_var(confidence_level=0.99)}")
+
+    # print(f"Skewness of Real Data Log Returns: {skew(log_returns_real)} whereas Skewness of Synthetic Data Log Returns: {skew(log_returns_synth)}")
+    # print(f"Kurtosis of Real Data Log Returns: {kurtosis(log_returns_real)} whereas Kurtosis of Synthetic Data Log Returns: {kurtosis(log_returns_synth)}")
 
     # fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
