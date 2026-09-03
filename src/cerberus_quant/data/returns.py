@@ -4,24 +4,16 @@ import math
 import statistics
 
 class ReturnCalculator:
-    def __init__(self, prices: list[float]):
+    def __init__(self, prices: np.ndarray):
         if len(prices) < 2:
             raise ValueError("Need at least two prices to calculate returns.")
-        self.prices =  prices
+        self.prices =  np.asarray(prices)
 
-    def simple_returns(self) -> list[float]:
-        l1 = []
-        for k in range(len(self.prices)-1):
-            l1.append(self.prices[k+1]/self.prices[k] - 1)
-        
-        return l1
+    def simple_returns(self) -> np.ndarray:
+        return (self.prices[1:] - self.prices[:-1]) / self.prices[:-1]
 
-    def log_returns(self) -> list[float]:
-        l2 = []
-        for k in range(len(self.prices)-1):
-            l2.append(math.log(self.prices[k+1]/self.prices[k])) 
-        
-        return l2
+    def log_returns(self) -> np.ndarray:
+        return np.log(self.prices[1:] / self.prices[:-1])
 
 
 if (__name__ == "__main__"):

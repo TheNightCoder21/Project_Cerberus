@@ -11,6 +11,10 @@ class MarketDataFetcher:
 
         df = yf.download(ticker, start=start_date, end=end_date)
                 
+        if df.empty:
+            raise ConnectionError(f"Failed to fetch data for {ticker}. The API returned an empty DataFrame.")
+                
+
         if isinstance(df.columns, pd.MultiIndex):
             df.columns = df.columns.get_level_values(0)
 

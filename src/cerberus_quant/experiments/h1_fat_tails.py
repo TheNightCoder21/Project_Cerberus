@@ -30,6 +30,7 @@ if __name__ == "__main__":
 
     hist_model_real = RiskModel(historical_returns=log_returns_real)
     print(f"Historical VaR (Real Data) at 99% confidence: {hist_model_real.historical_var(confidence_level=0.99)}")
+    print(f"Historical CVaR (Real Data) at 99% confidence: {hist_model_real.historical_cvar(confidence_level=0.99)}")   
 
     # print(f"Skewness of Real Data Log Returns: {skew(log_returns_real)} whereas Skewness of Synthetic Data Log Returns: {skew(log_returns_synth)}")
     # print(f"Kurtosis of Real Data Log Returns: {kurtosis(log_returns_real)} whereas Kurtosis of Synthetic Data Log Returns: {kurtosis(log_returns_synth)}")
